@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## HOW TO RUN THIS PROJECT
+1) clone this project to your local system
+2) Open Code in any Editor -> prefered -> Visual Studio Code
+3) do "ng serve --port 9999"
+4) go to Chrome Browser and Open -> localhost:9999/home
+5) try button Login "the last one"
+6) and then you can redirect to main page -> ENJOY the DIALOGFLOW CHATBOT
