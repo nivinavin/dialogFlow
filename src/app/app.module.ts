@@ -11,14 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
-var firebaseConfig = {
-  apiKey: "AIzaSyATfqPMd9dfU265jzR7uGadoDVDWzNdZ-M",
-  authDomain: "db-agent-alos.firebaseapp.com",
-  databaseURL: "https://db-agent-alos.firebaseio.com",
-  projectId: "db-agent-alos",
-  storageBucket: "db-agent-alos.appspot.com",
-  messagingSenderId: "744957673106",
-};
+//@TODO
+// add your config map of your goole-firebase service.json file details
+//otherwise it will give you error
+//initialise - firebaseConfig = config {}
 
 
 @NgModule({
