@@ -51,6 +51,7 @@ export class AuthService {
   }
 
   async sendPasswordResetEmail(passwordResetEmail: string) {
+    localStorage.setItem('userEmail', JSON.stringify(passwordResetEmail))
     return await this.afAuth.sendPasswordResetEmail(passwordResetEmail);
   }
 

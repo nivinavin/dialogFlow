@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TextToSpeachService } from 'src/app/service/text-to-speach.service';
 
 @Component({
   selector: 'app-login',
@@ -11,27 +12,27 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
   loading = false;
   submitted = false;
-  loginDetailsForm;
+  loginDetailsForm: FormGroup;
   isLoggedIn = false;
-  loggedIn;
+  loggedIn: string;
   loadingCircle: boolean = false;
   loadingGoogle: boolean = false;
   loadingReset: boolean = false;
 
-  constructor(public authService: AuthService, 
+  constructor(public textSpeach: TextToSpeachService,
+              public authService: AuthService, 
               public router: Router,
-              public activateRoute: ActivatedRoute,
               public formBuilder: FormBuilder) { 
                 this.loginDetailsForm = this.formBuilder.group({
-                  email: ["",Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+                email: ["",Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
                 password: ''
               })
                 }
 
   ngOnInit(): void {
+    this.textSpeach.textToAudio("Welcome To DB First Virtual Heckathon")
     this.isLoggedIn = true;
   }
 
@@ -46,12 +47,14 @@ export class LoginComponent implements OnInit {
 
         // stop here if form is invalid
         if (this.loginDetailsForm.invalid) {
+          
+          alert("please Enter Email and Password");
             return false;
         }
-    this.playAudio("../../../assets/sound/beep-07.mp3");
+    // this.playAudio("../../../assets/sound/beep-07.mp3");
     console.log(this.loginDetailsForm)
     this.loggedIn =await this.login(this.loginDetailsForm.controls['email'].value, this.loginDetailsForm.controls['password'].value)
-    if(this.loggedIn === "auth/user-not-found" )
+    if(this.loggedIn === "auth/user-not-found" || this.loggedIn === "auth/wrong-password")
     {
       this.loadingCircle = false;
       console.log(this.loggedIn);
@@ -59,7 +62,7 @@ export class LoginComponent implements OnInit {
     }
     else {
       this.isLoggedIn=false;
-        this.router.navigate(['home'])
+        this.router.navigate(['home']);
     }
   }
 
@@ -72,19 +75,21 @@ export class LoginComponent implements OnInit {
   
 
   onReset() {
-    this.loadingReset = true;
-    this.delay(500);
     this.submitted = false;
     this.loginDetailsForm.reset();
   }
 
   loginWithGoogle() {
     this.loadingGoogle = true;
-    this.delay(300);
     this.authService.loginWithGoogle();
   }
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
+speakIt(data: string) {
+  console.log(data);
+  this.textSpeach.textToAudio(data);
 }
 }
